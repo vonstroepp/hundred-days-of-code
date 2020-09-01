@@ -1,7 +1,15 @@
 import React from 'react';
 
 export default function Total(props) {
-    return (
-        <p>Number of exercises {props.exercises1 + props.exercises2 + props.exercises3}</p>
+   let exercises = 0; 
+   props.parts.forEach((prop) =>{
+      exercises = exercises + prop.exercises;
+   })
+
+   return (
+       <div>
+            <h4>Total:</h4>
+            <p>Number of exercises: {exercises}</p>
+       </div>
     )
 }
