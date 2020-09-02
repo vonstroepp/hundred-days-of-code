@@ -1,12 +1,12 @@
 import React from 'react';
 import Part from './Part';
 
-const Content = (props) => {
+const Content = ({parts}) => {
 
     return(
         <div>
         <h2>Exercises: </h2>
-        {props.parts.map((prop, key) => (
+        {parts.map((prop, key) => (
              <Part key={prop.name} part={prop.name} exercises={prop.exercises}/>
         ))}
         </div>
