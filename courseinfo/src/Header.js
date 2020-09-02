@@ -1,7 +1,7 @@
 import React from 'react';
 
-export default function Header(props){
+export default function Header({course}){
     return (
-        <h1>{props.course}</h1>
+        <h1>{course}</h1>
     )
 };
