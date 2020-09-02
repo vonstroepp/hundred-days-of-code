@@ -92,9 +92,9 @@ const App = (props) => {
     </div>
   )
 
-  const Button = (props) => (
-    <button onClick = {props.handleClick}>
-      {props.text}
+  const Button = ({handleClick, text}) => (
+    <button onClick = {handleClick}>
+      {text}
     </button>
   )
 
