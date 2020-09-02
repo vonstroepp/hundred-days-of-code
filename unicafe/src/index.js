@@ -80,7 +80,16 @@ const App = (props) => {
   }
 
   const Statistic = ({text, stat}) => (
-    <div>{ text }: { stat }</div>
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <td>{ text }:</td>
+            <td>{ stat }</td>          
+          </tr>
+        </tbody>
+      </table>
+    </div>
   )
 
   const Button = (props) => (
