@@ -5,7 +5,7 @@ function App({course}) {
   return (
     <div>
       <h2>{course.name}</h2>
-        <Course course={ course} />
+        <Course course={ course.parts} />
     </div>
   )
 }

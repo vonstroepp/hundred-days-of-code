@@ -30,7 +30,7 @@ const course = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App course= {course }/>
+    <App course= { course }/>
   </React.StrictMode>,
   document.getElementById('root')
 );
