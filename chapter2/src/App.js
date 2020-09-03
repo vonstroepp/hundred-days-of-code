@@ -1,11 +1,12 @@
 import React from 'react'
 import Course from './Components/Course';
 
-function App({course}) {
+function App({courses}) {
+  console.log(courses);
   return (
     <div>
-      <h2>{course.name}</h2>
-        <Course course={ course.parts} />
+      <Course courses={ courses[0]} />
+      <Course courses={ courses[1]} />
     </div>
   )
 }
