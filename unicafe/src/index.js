@@ -7,9 +7,12 @@ const App = (props) => {
   const [bad, setBad] = useState(0);
   const [all, setAll] = useState(0);
   const [selected, setSelected] = useState(0);
-  const [votes, setVotes] = useState({
-     0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 
-  })
+  const [votes, setVotes] = useState([0,0,0,0,0,0]);
+  const [highestVote, setHighestVote] = useState(0);
+
+  // {
+  //    0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 
+  // }
 
   const calcAverage = function(a, b, c) {
     return (a + b + c) / 2 + ' %'
@@ -28,7 +31,6 @@ const App = (props) => {
   }
   
   const positive = calcPositive(all, good);
-  
   
   const handleGoodClick = () => { 
     setGood(good+1);
@@ -61,14 +63,24 @@ const App = (props) => {
   ];
   
   const handleVote = () => {
-    const newVotes = { ...votes }
-    newVotes[selected] +=1
+    const newVotes = [ ...votes ]
+    newVotes[selected] += 1
     setVotes(newVotes)
+    voteHighest()
+  }
+  
+  const voteHighest = () => {
+    const asc =(a,b) => b-a;
+    const highVotes = [...votes]
+    // highVotes.sort(asc);
+    // let highVote = highVotes[0]+1;
+    // setHighestVote(highVote);
+    console.log((highVotes).reduce((a, b) => highVotes[a] > highVotes[b] ? a : b))
   }
   
   return (
     <div>
-    <Anecdotes numOfVotes = { votes[selected] } handleVote = {handleVote} anecdotes = {anecdotes } selected= { selected } clickHandler = { handleShowRandomAnecdote } text="Show Random Anecdote"/>
+    <Anecdotes highestVote = { highestVote } numOfVotes = { votes[selected] } handleVote = {handleVote} anecdotes = {anecdotes } selected= { selected } clickHandler = { handleShowRandomAnecdote } text="Show Random Anecdote"/>
     <h2>Give Feedback</h2>
     <div>
     <Button handleClick = { handleGoodClick } text="Good"/>
@@ -125,21 +137,20 @@ const App = (props) => {
   )
 
   const Anecdotes = (props) => {
-    console.log(props);
+    console.log('phn',props.highestVote);
     return (
       <div>
         <Button handleClick = { props.clickHandler } text = { props.text }/>
-        <Anecdote numOfVotes = {props.numOfVotes} handleVote = {props.handleVote} anecdotes = { props.anecdotes } selected = { props.selected } />
+        <Anecdote highestVote = {props.highestVote} numOfVotes = {props.numOfVotes} handleVote = {props.handleVote} anecdotes = { props.anecdotes } selected = { props.selected } />
       </div>
     )
   }
 
-  const Anecdote = ({numOfVotes, handleVote, anecdotes, selected}) => (
+  const Anecdote = ({highestVote, numOfVotes, handleVote, anecdotes, selected}) => (
     <div>
-      <p>{anecdotes[selected]} <code> has { numOfVotes } votes</code></p>
-      
-      <Button handleClick = {handleVote} text="vote"/>
-
+      <p>{ anecdotes[selected] } <code> has { numOfVotes } votes</code></p>
+      <Button handleClick = { handleVote } text="vote"/>
+      <div>{ anecdotes[highestVote] }</div>
     </div>
   )
   
