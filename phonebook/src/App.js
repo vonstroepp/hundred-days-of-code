@@ -16,8 +16,8 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('555-5555');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const handleSearchChange = (event) => setSearchTerm(event.target.value);
 
+  const handleSearchChange = (event) => setSearchTerm(event.target.value);
   useEffect(() => {
     const results = persons.filter(person => person.name.toLowerCase().includes(searchTerm));
     setSearchResults(results);
@@ -37,7 +37,7 @@ const App = () => {
     const found = persons.find((element) => {
       return element.name === personObject.name
     });
-    found ? alert(`${ personObject.name } 2.7'already exists`) : setPersons(persons.concat(personObject));
+    found ? alert(`${ personObject.name } already exists`) : setPersons(persons.concat(personObject));
     setNewName('');
     setNewNumber('');
   }
