@@ -4,7 +4,6 @@ const Person = (props) => (
   <div key= {props.person.id}>{props.person.person }</div>
 )
 
-
 const App = (props) => {
   const [ persons, setPersons ] = useState([
     { id: 1,  person: 'Arto Hellas', date: new Date().toISOString(), important: true }
@@ -13,7 +12,6 @@ const App = (props) => {
   const [showAll, setShowAll ] = useState(true)
 
   const handlePersonChange = (event) => {
-    console.log(event.target.value)
     setNewPerson(event.target.value)
   }
 
@@ -25,20 +23,26 @@ const App = (props) => {
       important: Math.random() < 0.5,
       id: persons.length +1
     }
-    setPersons(persons.concat(personObject))
-    setNewPerson('')
+    
+    const found = persons.find((element) => {
+      return element.person === personObject.person
+    });
+    
+    found ? alert('person already exists') : setPersons(persons.concat(personObject));
+   
+    setNewPerson('');
   }
 
   const personsToShow = showAll
     ? persons
-    : persons.filter(person => person.important === true)
+    : persons.filter(person => person.important === true);
 
   return (
     <div>
       <h2>Phonebook</h2>
       <div>
         <button onClick={ () => setShowAll( !showAll ) }>
-          Show { showAll ? 'important' : 'all' } 
+          Show { showAll ? 'Show Important people only' : 'Show All people' } 
         </button>
       </div>
       <ul>
@@ -48,10 +52,10 @@ const App = (props) => {
       </ul>
       <form onSubmit={addPerson}>
         <div>
-          person: <input value={newPerson} onChange={handlePersonChange}/>
+          Enter a new Name: <input value={newPerson} onChange={handlePersonChange}/>
         </div>
         <div>
-          <button type="submit">add</button>
+          <button type="submit">Add a new person</button>
         </div>
       </form>
       <h2>Numbers</h2>
