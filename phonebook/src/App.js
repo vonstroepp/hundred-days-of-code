@@ -1,21 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Filter from './Filter';
 import Numbers from './Numbers';
 import PersonForm from './PersonForm';
 
 const App = () => {
 
-  const [ persons, setPersons ] = useState([
-    { id: 1, name: 'Arto Hellas', number: '212-867-5309', date: new Date().toISOString() },
-    { id: 2, name: 'Ada Lovelace', number: '39-44-5323523', date: new Date().toISOString() },
-    { id: 3, name: 'Dan Abramov', number: '12-43-234345', date: new Date().toISOString() },
-    { id: 4, name: 'Mary Poppendieck', number: '39-23-6423122', date: new Date().toISOString() }
-  ]) 
+  const [ persons, setPersons ] = useState([]) 
 
   const [newName, setNewName ] = useState('Firstname Lastname');
   const [newNumber, setNewNumber] = useState('555-5555');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+  const hook = () => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log(response.data)
+        setPersons(response.data)
+      })
+  };
+
+  useEffect(hook, []);
 
   const handleSearchChange = (event) => setSearchTerm(event.target.value);
   useEffect(() => {
@@ -57,7 +64,7 @@ const App = () => {
       />          
       <h2>Numbers</h2>
       {searchTerm === '' ? 
-        persons.map((person) => <Numbers key = {person.id} person={ person } date={ person.date }/>)
+        persons.map((person) => <Numbers key = {person.id} person={ person } />)
         :
         searchResults.map((person) => <Numbers key = {person.id} person={ person } date={ person.date }/>)
       }
