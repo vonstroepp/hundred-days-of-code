@@ -28,7 +28,7 @@ const App = (props) => {
       return element.person === personObject.person
     });
     
-    found ? alert('person already exists') : setPersons(persons.concat(personObject));
+    found ? alert(`${ personObject.person } 2.7'already exists`) : setPersons(persons.concat(personObject));
    
     setNewPerson('');
   }
