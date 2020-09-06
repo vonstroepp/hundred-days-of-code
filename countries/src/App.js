@@ -11,8 +11,8 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   const baseUrl = 'https://restcountries.eu/rest/v2/all';
-  
-  const hook = () => {
+
+  const countriesHook = () => {
     axios
       .get(baseUrl)
       .then(response => {
@@ -20,7 +20,7 @@ function App() {
       })
   }
 
-  useEffect(hook, []);
+  useEffect(countriesHook, []);
 
   const handleSearchChange = (event) => { setSearchTerm(event.target.value) }
     useEffect(() => {
@@ -49,13 +49,11 @@ function App() {
               searchResults.length > 1
               ?
               searchResults.map(country => {
-                  return <div>
-                    <CountryResults key={ country.alpha2Code } country= { country } />
-                  </div>
+                  return <CountryResults key={ country.alpha2Code } country= { country } />
               })
               :
               searchResults.map(country => {
-                return <CountryCard country={ country }/>
+                return <CountryCard key={ country.alpha2Code } country={ country } />
               })
         }
       </div>

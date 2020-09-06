@@ -13,13 +13,13 @@ function CountryResults({ country }) {
         <div>
             <div>
                 <div>{country.name}</div>
-                <button type="button" onClick={  handleShowCountry } >Show More</button>
+                <button type="button" onClick={  handleShowCountry } >{isExpanded ? "Show Less" : "Show More"}</button>
             </div>
             {
             isExpanded ?
             <CountryCard country={ country } />
             :
-            <div></div>
+            null
             }
         </div>
 )
