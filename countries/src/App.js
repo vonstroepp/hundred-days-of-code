@@ -35,20 +35,35 @@ function App() {
         <input placeholder="Search for a country" value={ searchTerm } type="text" onChange={ handleSearchChange }/>
       </div>
       <div>
-        <h3>All Countries</h3>
         {
           searchTerm === ''
           ?
-          countries.map(country => {
-           return <div key={ country.alpha2Code }>Country: { country.name }</div>
-          })
+          <div>No countries searched yet</div>
           :
-          searchResults.length > 20 ?
+          searchResults.length > 20 
+            ?
             <div>Too many countries - please type in more to narrow search</div>
             :
-            searchResults.map(country => {
-              return <div key={ country.alpha2Code }>Search Results: {country.name}</div>
-            })
+              searchResults.length > 1
+              ?
+              searchResults.map(country => {
+                return <div key={ country.alpha2Code }>Search Results: {country.name}</div>
+              })
+              :
+              searchResults.map(country => {
+                return <div key={ country.alpha2Code }>
+                  <h3>{ country.name }</h3>
+                  <img src={country.flag} alt={ country.name } width="150"/>
+                  <div>Capital: { country.capital }</div>
+                  <div>Population: { country.population }</div>
+                  <div>Languages:</div>
+                    <div>
+                      {country.languages.map(language => {
+                      return <div key={ language.iso639_1}>{language.name} ({ language.nativeName })</div>
+                      })
+                    }</div>
+                </div>
+              })
         }
       </div>
       
