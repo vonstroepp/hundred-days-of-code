@@ -1,6 +1,8 @@
 import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
+import CountryCard from './CountryCard';
+import CountryResults from './CountryResults';
 
 function App() {
 
@@ -14,7 +16,6 @@ function App() {
     axios
       .get(baseUrl)
       .then(response => {
-        console.log(response.data)
         setCountries(response.data)
       })
   }
@@ -26,7 +27,7 @@ function App() {
       const results = countries.filter(country => 
         country.name.toLowerCase().includes(searchTerm))
       setSearchResults(results)
-    }, [searchTerm]);
+    }, [countries, searchTerm]);
 
   return (
     <div className="App">
@@ -34,6 +35,7 @@ function App() {
         <h3>Country Search</h3>
         <input placeholder="Search for a country" value={ searchTerm } type="text" onChange={ handleSearchChange }/>
       </div>
+      <h3>SearchResults</h3>
       <div>
         {
           searchTerm === ''
@@ -47,22 +49,13 @@ function App() {
               searchResults.length > 1
               ?
               searchResults.map(country => {
-                return <div key={ country.alpha2Code }>Search Results: {country.name}</div>
+                  return <div>
+                    <CountryResults key={ country.alpha2Code } country= { country } />
+                  </div>
               })
               :
               searchResults.map(country => {
-                return <div key={ country.alpha2Code }>
-                  <h3>{ country.name }</h3>
-                  <img src={country.flag} alt={ country.name } width="150"/>
-                  <div>Capital: { country.capital }</div>
-                  <div>Population: { country.population }</div>
-                  <div>Languages:</div>
-                    <div>
-                      {country.languages.map(language => {
-                      return <div key={ language.iso639_1}>{language.name} ({ language.nativeName })</div>
-                      })
-                    }</div>
-                </div>
+                return <CountryCard country={ country }/>
               })
         }
       </div>
