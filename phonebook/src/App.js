@@ -6,16 +6,17 @@ import PersonForm from './PersonForm';
 
 const App = () => {
 
-  const [ persons, setPersons ] = useState([]) 
-
+  const [ persons, setPersons ] = useState([]); 
   const [newName, setNewName ] = useState('Firstname Lastname');
   const [newNumber, setNewNumber] = useState('555-5555');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
+  const baseUrl = 'http://localhost:3001/persons';
+
   const hook = () => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(baseUrl)
       .then(response => {
         console.log(response.data)
         setPersons(response.data)
@@ -41,13 +42,22 @@ const App = () => {
       number: newNumber,
       date: new Date().toISOString(),
     }
+
     const found = persons.find((element) => {
       return element.name === personObject.name
     });
-    found ? alert(`${ personObject.name } already exists`) : setPersons(persons.concat(personObject));
-    setNewName('');
-    setNewNumber('');
+
+    found ? alert(`${ personObject.name } already exists`) : 
+    
+    axios
+      .post(baseUrl, personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
   }
+
 
   return (
     <div>
