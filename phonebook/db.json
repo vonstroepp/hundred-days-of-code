@@ -31,18 +31,6 @@
       "name": "john smith",
       "number": "867-5309",
       "date": "2020-09-06T23:00:37.688Z"
-    },
-    {
-      "id": 7,
-      "name": "terry jackson",
-      "number": "655-5555",
-      "date": "2020-09-06T23:02:06.717Z"
-    },
-    {
-      "id": 8,
-      "name": "arturo vidal",
-      "number": "2345098 -0000",
-      "date": "2020-09-06T23:16:05.154Z"
     }
   ]
 }

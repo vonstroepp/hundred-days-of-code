@@ -45,15 +45,28 @@ const App = () => {
       setNewNumber('')
     })
   }
+
+  const deleteName = (person) => {
+    console.log(person.id)
+    personService
+    .deletePerson(person)
+    .then(() => {
+      setPersons(persons.filter(item => item.id !== person.id));
+      alert(`${person.name} has been removed from the phone book`);
+    })
+  }
   
+  
+
   const handleSearchChange = (event) => setSearchTerm(event.target.value);
   useEffect(() => {
     const results = persons.filter(person => person.name.toLowerCase().includes(searchTerm));
     setSearchResults(results);
-  }, [searchTerm])
+  }, [searchTerm, persons])
   
   const handleNameChange = (event) => setNewName(event.target.value);
   const handleNumberChange = (event) => setNewNumber(event.target.value);
+
   
   return (
     <div>
@@ -70,9 +83,9 @@ const App = () => {
       />          
       <h2>Names and Numbers</h2>
       {searchTerm === '' ? 
-        persons.map((person) => <Numbers key = {person.id} person={ person } />)
+        persons.map((person) => <Numbers key={person.id}  person={ person } deleteName={() => deleteName(person)} />)
         :
-        searchResults.map((person) => <Numbers key = {person.id} person={ person } date={ person.date }/>)
+        searchResults.map((person) => <Numbers key={person.id} person={ person } date={ person.date } deleteName={() => deleteName(person)} />)
       }
     </div>
   )

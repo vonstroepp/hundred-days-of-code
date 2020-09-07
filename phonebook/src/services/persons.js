@@ -10,7 +10,13 @@ const createPerson = newObject => {
     return axios.post(baseUrl, newObject)
 }
 
+const deletePerson = (person) => {
+    console.log('person', person.id)
+    return axios.delete(`${baseUrl}/${person.id}`)
+}
+
 export default {
     getAll: getAll,
-    createPerson: createPerson
+    createPerson: createPerson,
+    deletePerson: deletePerson
 }
