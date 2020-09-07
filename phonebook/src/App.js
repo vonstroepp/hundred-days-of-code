@@ -15,8 +15,8 @@ const App = () => {
   const hook = () => {
     personService
       .getAll()
-      .then(response => {
-        setPersons(response.data)
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   };
 
@@ -25,35 +25,39 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     const personObject = {
-      id: persons.length +1,
       name: newName,
-      number: newNumber,
-      date: new Date().toISOString(),
+      number: newNumber
     }
     
     const found = persons.find((element) => {
       return element.name === personObject.name
     });
     
-    found ? alert(`${ personObject.name } already exists`) : 
-    
+    found 
+    ? 
+    alert(`${personObject.name} already exists in the phonebook.`) 
+    : 
     personService
-    .createPerson(personObject)
-    .then(response => {
-      setPersons(persons.concat(response.data))
-      setNewName('')
-      setNewNumber('')
-    })
-  }
+      .createPerson(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+      })
+    }
 
   const deleteName = (person) => {
-    console.log(person.id)
+    const message = `Do you really want to delete ${person.name} ?`;
+    window.confirm(message) 
+    ?
     personService
     .deletePerson(person)
     .then(() => {
-      setPersons(persons.filter(item => item.id !== person.id));
+      setPersons(persons.filter(item => item.id !== person.id))
       alert(`${person.name} has been removed from the phone book`);
     })
+    : 
+    alert(`${person.name} will remain in the phone book`)
   }
   
   
