@@ -44,6 +44,9 @@ const App = () => {
           setNewName('')
           setNewNumber('')
       })
+      .catch(e => {
+        console.log(e + 'Error adding contact');
+      })
     }
 
   const deleteName = (person) => {
@@ -56,8 +59,11 @@ const App = () => {
       setPersons(persons.filter(item => item.id !== person.id))
       alert(`${person.name} has been removed from the phone book`);
     })
+    .catch(e => {
+      console.log('Could not remove contact' + e);
+    })
     : 
-    alert(`${person.name} will remain in the phone book`)
+    alert(`${person.name}: is not deleted from the pone book`)
   }
   
   
