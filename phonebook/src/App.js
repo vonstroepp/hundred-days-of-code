@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import personService from './services/persons';
-import Filter from './Filter';
-import Numbers from './Numbers';
-import PersonForm from './PersonForm';
+import Filter from './components/Filter';
+import Numbers from './components/Numbers';
+import PersonForm from './components/PersonForm';
+import Notification from './components/Notification';
 
 const App = () => {
 
@@ -11,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('')
 
   const hook = () => {
     personService
@@ -33,20 +35,30 @@ const App = () => {
       return element.name === personObject.name
     });
     
-    found 
-    ? 
-    alert(`${personObject.name} already exists in the phonebook.`) 
-    : 
-    personService
-      .createPerson(personObject)
-        .then(returnedPerson => {
-          setPersons(persons.concat(returnedPerson))
-          setNewName('')
-          setNewNumber('')
-      })
-      .catch(e => {
-        console.log(e + 'Error adding contact');
-      })
+    if (found){
+      setErrorMessage(
+        `${personObject.name} already exists in the phonebook.`
+      )
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
+    } else {
+      personService
+        .createPerson(personObject)
+          .then(returnedPerson => {
+            setPersons(persons.concat(returnedPerson))
+            setNewName('')
+            setNewNumber('')
+        })
+        .catch(e => {
+          setErrorMessage(
+            'Error adding Name'
+          )
+          setTimeout(() => {
+            setErrorMessage('')
+          }, 5000)
+        })
+      }
     }
 
   const deleteName = (person) => {
@@ -57,10 +69,20 @@ const App = () => {
     .deletePerson(person)
     .then(() => {
       setPersons(persons.filter(item => item.id !== person.id))
-      alert(`${person.name} has been removed from the phone book`);
+      setErrorMessage(
+        `${person.name} has been removed from the phone book`
+      )
+      setTimeout(() => {
+        setErrorMessage('')
+      }, 5000)
     })
     .catch(e => {
-      console.log('Could not remove contact' + e);
+      setErrorMessage(
+        'Could not remove contact'
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     })
     : 
     alert(`${person.name}: is not deleted from the pone book`)
@@ -81,6 +103,7 @@ const App = () => {
   return (
     <div>
       <h2>A Phonebook</h2>
+      <Notification message={ errorMessage } />
       <Filter searchTerm={ searchTerm }
               handleSearchChange = { handleSearchChange }
       />
