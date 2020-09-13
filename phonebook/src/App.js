@@ -4,6 +4,7 @@ import Filter from './components/Filter';
 import Numbers from './components/Numbers';
 import PersonForm from './components/PersonForm';
 import Notification from './components/Notification';
+import './App.css';
 
 const App = () => {
 
@@ -36,12 +37,10 @@ const App = () => {
     });
     
     if (found){
-      setErrorMessage(
-        `${personObject.name} already exists in the phonebook.`
-      )
-      setTimeout(() => {
-        setErrorMessage('')
-      }, 5000)
+      
+        alert(`${personObject.name} already exists in the phonebook.`)
+      
+ 
     } else {
       personService
         .createPerson(personObject)
@@ -101,7 +100,7 @@ const App = () => {
 
   
   return (
-    <div>
+    <div className="container">
       <h2>A Phonebook</h2>
       <Notification message={ errorMessage } />
       <Filter searchTerm={ searchTerm }

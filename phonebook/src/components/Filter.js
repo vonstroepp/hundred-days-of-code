@@ -2,7 +2,7 @@ import React from 'react'
 
 function Filter({ searchTerm, handleSearchChange}) {
     return (
-        <div>
+        <div className="filter">
             <h4>Type to search for a name</h4>
             <input placeholder="type in lower caps" 
                    onChange={ handleSearchChange } 
