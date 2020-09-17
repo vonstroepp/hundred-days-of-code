@@ -86,8 +86,6 @@ const App = () => {
     : 
     alert(`${person.name}: is not deleted from the pone book`)
   }
-  
-  
 
   const handleSearchChange = (event) => setSearchTerm(event.target.value);
   useEffect(() => {
@@ -103,16 +101,16 @@ const App = () => {
     <div className="container">
       <h2>A Phonebook</h2>
       <Notification message={ errorMessage } />
-      <Filter searchTerm={ searchTerm }
+      {<Filter searchTerm={ searchTerm }
               handleSearchChange = { handleSearchChange }
-      />
+  />}
       <br />
-      <PersonForm addName={ addName } 
+      {<PersonForm addName={ addName } 
                   newName={ newName } 
                   handleNameChange={ handleNameChange } 
                   newNumber = { newNumber }
                   handleNumberChange = {handleNumberChange}
-      />          
+/>   }       
       <h2>Names and Numbers</h2>
       {searchTerm === '' ? 
         persons.map((person) => <Numbers key={person.id}  person={ person } deleteName={() => deleteName(person)} />)
