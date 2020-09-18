@@ -39,7 +39,6 @@ const App = () => {
     if (found){
       
         alert(`${personObject.name} already exists in the phonebook.`)
-      
  
     } else {
       personService
@@ -66,8 +65,9 @@ const App = () => {
     ?
     personService
     .deletePerson(person)
+    .then(console.log(person))
     .then(() => {
-      setPersons(persons.filter(item => item.id !== person.id))
+      setPersons(persons.filter(item => item.name !== person.name))
       setErrorMessage(
         `${person.name} has been removed from the phone book`
       )
