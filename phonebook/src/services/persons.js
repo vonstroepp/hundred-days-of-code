@@ -16,9 +16,11 @@ const createPerson = newObject => {
     })
 }
 
-const updatePerson = (id, newPerson) => {
-    const request = axios.put(`${baseUrl}/${id}`, newPerson)
+const updatePerson = (id, updatedPerson) => {
+    console.log('uodatedPerson', updatedPerson.number, id)
+    const request = axios.put(`${baseUrl}/${id}`, updatedPerson)
     return request.then(response => {
+        console.log('response2', response.data)
         return response.data
     })
 }

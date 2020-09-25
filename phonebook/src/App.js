@@ -27,24 +27,44 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
+
     const personObject = {
       name: newName,
       number: newNumber
     }
+    const updatedPersonObject = {
+      ...personObject,
+      number: newNumber
+    }
     
     const found = persons.find((element) => {
-      return element.name === personObject.name
+      console.log('element', element,element.id)
+      if(element.name === personObject.name){
+        return element
+      }
+      return null
     });
     
     if (found){
-      
-        alert(`${personObject.name} already exists in the phonebook.`)
- 
+      console.log('found', found)
+      const message = `${found.id}, ${found.name} already exists in the phonebook. Do you want to update the pone number instead?`;
+      window.confirm(message)
+      ? 
+      personService
+        .updatePerson(found.id, updatedPersonObject)
+          .then(console.log('upo', updatedPersonObject, personObject))
+          .then(returnedPerson => {
+            setPersons(persons.concat.length(returnedPerson))
+            setNewNumber('')
+          })
+      :
+      alert("Operation aborted by user")
     } else {
       personService
         .createPerson(personObject)
           .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
+            console.log('ret2', returnedPerson)
             setNewName('')
             setNewNumber('')
         })
@@ -58,6 +78,10 @@ const App = () => {
         })
       }
     }
+  
+  const updateName = (person) => {
+    console.log('id', person.id)
+  }  
 
   const deleteName = (person) => {
     const message = `Do you really want to delete ${person.name} ?`;
@@ -67,7 +91,7 @@ const App = () => {
     .deletePerson(person)
     .then(() => {
       const indexOfPerson = persons.indexOf(person)
-      const foo = persons.splice(indexOfPerson, 1);
+      persons.splice(indexOfPerson, 1);
       setPersons(persons)
 
       setErrorMessage(
@@ -96,7 +120,11 @@ const App = () => {
   }, [searchTerm, persons])
   
   const handleNameChange = (event) => setNewName(event.target.value);
-  const handleNumberChange = (event) => setNewNumber(event.target.value);
+  const handleNumberChange = (event) => { 
+    // const results = person.filter(person => person.name.toLowerCase())
+    // console.log('hi', event.target)
+    setNewNumber(event.target.value)
+  };
 
   
   return (
@@ -111,13 +139,13 @@ const App = () => {
                   newName={ newName } 
                   handleNameChange={ handleNameChange } 
                   newNumber = { newNumber }
-                  handleNumberChange = {handleNumberChange}
+                  handleNumberChange = { handleNumberChange }
 />   }       
       <h2>Names and Numbers</h2>
       {searchTerm === '' ? 
-        persons.map((person) => <Numbers key={person.id}  person={ person } deleteName={() => deleteName(person)} />)
+        persons.map((person) => <Numbers key={person.id}  person={ person } updateName={() => updateName(person)} deleteName={() => deleteName(person)} />)
         :
-        searchResults.map((person) => <Numbers key={person.id} person={ person } date={ person.date } deleteName={() => deleteName(person)} />)
+        searchResults.map((person) => <Numbers key={person.id} person={ person } date={ person.date } updateName={() => updateName(person)} deleteName={() => deleteName(person)} />)
       }
     </div>
   )
