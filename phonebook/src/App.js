@@ -65,11 +65,13 @@ const App = () => {
     ?
     personService
     .deletePerson(person)
-    .then(console.log(person))
     .then(() => {
-      setPersons(persons.filter(item => item.name !== person.name))
+      const indexOfPerson = persons.indexOf(person)
+      const foo = persons.splice(indexOfPerson, 1);
+      setPersons(persons)
+
       setErrorMessage(
-        `${person.name} has been removed from the phone book`
+        `${person.name} has been removed from the phone book. ID: ${person.id}`
       )
       setTimeout(() => {
         setErrorMessage('')
