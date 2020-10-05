@@ -38,7 +38,6 @@ const App = () => {
     }
     
     const found = persons.find((element) => {
-      console.log('element', element,element.id)
       if(element.name === personObject.name){
         return element
       }
@@ -46,7 +45,7 @@ const App = () => {
     });
     
     if (found){
-      console.log('found', found)
+      // console.log('found', found)
       const message = `${found.id}, ${found.name} already exists in the phonebook. Do you want to update the pone number instead?`;
       window.confirm(message)
       ? 
@@ -64,7 +63,7 @@ const App = () => {
         .createPerson(personObject)
           .then(returnedPerson => {
             setPersons(persons.concat(returnedPerson))
-            console.log('ret2', returnedPerson)
+            // console.log('ret2', returnedPerson)
             setNewName('')
             setNewNumber('')
         })
@@ -81,6 +80,7 @@ const App = () => {
   
   const updateName = (person) => {
     console.log('id', person.id)
+    //TODO - update Names, update numbers
   }  
 
   const deleteName = (person) => {
